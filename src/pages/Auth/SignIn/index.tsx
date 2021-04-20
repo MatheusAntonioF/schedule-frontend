@@ -11,9 +11,9 @@ import { Wrapper, Title, Container } from './styles';
 const SignIn: React.FC = () => {
   return (
     <Wrapper>
-      <Title>Schedules</Title>
       <Container>
-        <Form>
+        <Title>Schedules</Title>
+        <Form width="60%">
           <Input label="Email" name="mail" type="email" icon={FiMail} />
 
           <Input label="Password" name="mail" type="password" icon={FiKey} />
@@ -22,7 +22,7 @@ const SignIn: React.FC = () => {
             <Button>Entrar</Button>
           </div>
         </Form>
-        <Button width="70%" ghost>
+        <Button width="20%" ghost>
           Registrar
         </Button>
       </Container>

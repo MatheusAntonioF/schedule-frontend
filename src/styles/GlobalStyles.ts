@@ -32,10 +32,6 @@ const GlobalStyles = createGlobalStyle`
   a {
     text-decoration: none;
   }
-
-  .ant-typography {
-    color: ${({ theme: { pallete } }) => pallete.text.main} !important;
-  }
 `;
 
 export { GlobalStyles };
