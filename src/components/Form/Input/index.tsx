@@ -1,20 +1,29 @@
 import React from 'react';
 
-import { InputProps } from 'antd';
+import { IconBaseProps } from 'react-icons/lib';
 
-import { StyledInput, Container } from './styles';
+import { Wrapper, ContainerInput, StyledInput } from './styles';
 
-interface ICustomProps extends InputProps {
+interface ICustomProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   name: string;
+  icon?: React.ComponentType<IconBaseProps>;
 }
 
-const Input: React.FC<ICustomProps> = ({ label, name, ...rest }) => {
+const Input: React.FC<ICustomProps> = ({
+  label,
+  name,
+  icon: Icon,
+  ...rest
+}) => {
   return (
-    <Container>
+    <Wrapper>
       <label htmlFor={name}>{label}</label>
-      <StyledInput name={name} {...rest} />
-    </Container>
+      <ContainerInput>
+        {Icon && <Icon size={20} />}
+        <StyledInput {...rest} name={name} />
+      </ContainerInput>
+    </Wrapper>
   );
 };
 

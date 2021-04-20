@@ -15,7 +15,7 @@ export const StyledForm = styled.form`
     align-items: center;
     justify-content: space-around;
 
-    margin-top: 1.6rem;
+    margin: 1.6rem 0rem 1.5rem;
 
     width: 100%;
   }
