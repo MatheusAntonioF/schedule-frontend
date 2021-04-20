@@ -46,10 +46,9 @@ export const ContainerInput = styled.div`
 export const StyledInput = styled.input`
   padding-left: 5px;
 
-  &:-internal-autofill-selected {
-    background-color: ${({ theme: { pallete } }) =>
-      pallete.darker.light} !important;
-  }
+  -webkit-appearance: none;
+
+  width: 100%;
 
   color: ${({ theme: { pallete } }) => pallete.text.main};
 
