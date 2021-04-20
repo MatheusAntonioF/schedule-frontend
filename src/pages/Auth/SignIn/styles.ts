@@ -1,6 +1,22 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import backgroundMeteor from '../../../styles/assets/background-animated.svg';
+
+const showContainer = keyframes`
+  from {
+    width: 0%;
+  } to {
+    width: 700px;
+  }
+`;
+
+const showSignInForm = keyframes`
+  from {
+    opacity: 0;
+  } to {
+    opacity: 1;
+  }
+`;
 
 export const Wrapper = styled.div`
   position: relative;
@@ -12,14 +28,6 @@ export const Wrapper = styled.div`
   background-size: cover;
 `;
 
-export const Title = styled.h1`
-  font-size: 4rem;
-  font-weight: 400;
-  margin-bottom: 1.5rem;
-
-  color: ${({ theme: { pallete } }) => pallete.primary.main};
-`;
-
 export const Container = styled.main`
   display: flex;
   flex-direction: column;
@@ -27,7 +35,12 @@ export const Container = styled.main`
   justify-content: center;
 
   max-width: 500px;
-  width: 100%;
+
+  animation-name: ${showContainer};
+  animation-duration: 1.5s;
+  animation-delay: 0s;
+  animation-fill-mode: backwards;
+
   height: 100%;
 
   padding: 1.25rem 1.5rem;
@@ -35,4 +48,21 @@ export const Container = styled.main`
   background: ${({ theme: { pallete } }) => pallete.darker.main};
 
   border-radius: 5px;
+
+  h1,
+  form,
+  button {
+    animation-name: ${showSignInForm};
+    animation-duration: 1.5s;
+    animation-delay: 0.5s;
+    animation-fill-mode: backwards;
+  }
+`;
+
+export const Title = styled.h1`
+  font-size: 4rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+
+  color: ${({ theme: { pallete } }) => pallete.primary.main};
 `;
