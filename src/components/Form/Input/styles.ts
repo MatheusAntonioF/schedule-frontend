@@ -1,47 +1,60 @@
 import styled, { css } from 'styled-components';
 
-import { Input } from 'antd';
+export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 
-export const Container = styled.div`
   width: 100%;
-  height: auto;
 
-  label {
+  > label {
     color: ${({ theme: { pallete } }) => pallete.text.main};
+    margin-bottom: 0.5rem;
+  }
+
+  label,
+  svg {
+    transition: all 200ms ease-in-out;
   }
 
   &:focus-within {
-    svg {
-      color: ${({ theme: { pallete } }) => pallete.primary.main};
-    }
-
-    label {
-      color: ${({ theme: { pallete } }) => pallete.primary.main};
-    }
+    ${({ theme: { pallete } }) => css`
+      > label {
+        color: ${pallete.primary.main};
+      }
+      svg {
+        color: ${pallete.primary.main};
+      }
+    `};
   }
 `;
 
-const sharedStyles = css`
-  background: ${({ theme: { pallete } }) => pallete.darker.light};
-  color: ${({ theme: { pallete } }) => pallete.text.main};
-  border-color: ${({ theme: { pallete } }) => pallete.darker.main};
-`;
+export const ContainerInput = styled.div`
+  display: flex;
+  align-items: center;
 
-export const StyledInput = styled(Input)`
-  ${sharedStyles}
-
-  input {
-    ${sharedStyles}
-  }
+  padding: 5px 10px;
 
   border-radius: 5px;
 
-  &:focus,
-  &:hover {
-    border-color: ${({ theme: { pallete } }) => pallete.primary.main};
+  ${({ theme: { pallete } }) => css`
+    background: ${pallete.darker.light};
+    color: ${pallete.text.main};
+    border-color: ${pallete.darker.main};
+  `};
+`;
+
+export const StyledInput = styled.input`
+  padding-left: 5px;
+
+  &:-internal-autofill-selected {
+    background-color: ${({ theme: { pallete } }) =>
+      pallete.darker.light} !important;
   }
 
-  &::placeholder {
-    color: ${({ theme: { pallete } }) => pallete.text.main};
-  }
+  color: ${({ theme: { pallete } }) => pallete.text.main};
+
+  background: ${({ theme: { pallete } }) => pallete.darker.light} !important;
+
+  outline: 0;
+  border: 0;
 `;
