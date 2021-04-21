@@ -1,4 +1,5 @@
 import React from 'react';
+import { RootProviders } from './hooks';
 
 import Routes from './routes';
 import { DefaultStyles } from './styles';
@@ -6,7 +7,9 @@ import { DefaultStyles } from './styles';
 const App = (): JSX.Element => {
   return (
     <DefaultStyles>
-      <Routes />
+      <RootProviders>
+        <Routes />
+      </RootProviders>
     </DefaultStyles>
   );
 };
