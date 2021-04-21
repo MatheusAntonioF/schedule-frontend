@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import { IFormProps } from '.';
 
-export const StyledForm = styled.form<IFormProps>`
+import { Form as Unform } from '@unform/web';
+
+export const StyledForm = styled(Unform)<{ width: string }>`
   display: flex;
   flex-direction: column;
   align-items: flex-start;

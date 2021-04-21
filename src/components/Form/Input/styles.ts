@@ -1,6 +1,10 @@
 import styled, { css } from 'styled-components';
 
-export const Wrapper = styled.div`
+interface IWrapperProps {
+  inputWithError: boolean;
+}
+
+export const Wrapper = styled.div<IWrapperProps>`
   display: flex;
   flex-direction: column;
 
@@ -21,11 +25,29 @@ export const Wrapper = styled.div`
       > label {
         color: ${pallete.primary.main};
       }
-      svg {
+      svg.icon-input {
         color: ${pallete.primary.main};
       }
     `};
   }
+
+  ${({ inputWithError, theme: { pallete } }) =>
+    inputWithError &&
+    css`
+      > label {
+        transition: all 0ms;
+
+        color: ${pallete.darger.main};
+      }
+
+      > div {
+        border-color: ${pallete.darger.main};
+
+        > svg.icon-input {
+          color: ${pallete.darger.main};
+        }
+      }
+    `}
 `;
 
 export const ContainerInput = styled.div`
@@ -35,6 +57,8 @@ export const ContainerInput = styled.div`
   padding: 5px 10px;
 
   border-radius: 5px;
+
+  border: 2px solid transparent;
 
   ${({ theme: { pallete } }) => css`
     background: ${pallete.darker.light};
@@ -72,4 +96,25 @@ export const StyledInput = styled.input`
 
   outline: 0;
   border: 0;
+`;
+
+export const ContainerError = styled.div`
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+
+  margin-top: 0.4rem;
+
+  > svg {
+    margin: 0px 0.2rem 0.1rem 0px;
+
+    border: none;
+
+    fill: ${({ theme: { pallete } }) => pallete.darger.main};
+  }
+`;
+
+export const ErrorMessage = styled.span`
+  color: ${({ theme: { pallete } }) => pallete.darger.main};
 `;
