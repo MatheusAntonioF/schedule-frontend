@@ -7,6 +7,9 @@ const darkTheme = {
       main: '#181616',
       light: '#474747',
     },
+    darger: {
+      main: '#d80032',
+    },
     text: {
       main: '#FAFAFA',
     },

@@ -1,17 +1,23 @@
+import { FormHandles, FormProps } from '@unform/core';
 import React from 'react';
 
 import { StyledForm } from './styles';
 
-export interface IFormProps extends React.FormHTMLAttributes<HTMLFormElement> {
+export interface IFormProps extends FormProps {
   width?: string;
 }
 
-const Form: React.FC<IFormProps> = ({ width = '100%', children, ...rest }) => {
+const FormWithRef: React.ForwardRefRenderFunction<FormHandles, IFormProps> = (
+  { width = '100%', children, onSubmit },
+  ref
+) => {
   return (
-    <StyledForm width={width} {...rest}>
+    <StyledForm width={width} ref={ref} onSubmit={onSubmit}>
       {children}
     </StyledForm>
   );
 };
+
+const Form = React.forwardRef(FormWithRef);
 
 export { Form };
