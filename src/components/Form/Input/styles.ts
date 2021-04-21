@@ -48,6 +48,22 @@ export const StyledInput = styled.input`
 
   -webkit-appearance: none;
 
+  ${({ theme: { pallete } }) => css`
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus {
+      border: none;
+      -webkit-text-fill-color: ${pallete.text.main} !important;
+      -webkit-box-shadow: 0 0 0px 1000px ${pallete.darker.light} inset;
+      transition: background-color 5000s ease-in-out 0s;
+    }
+  `};
+
   width: 100%;
 
   color: ${({ theme: { pallete } }) => pallete.text.main};
