@@ -6,7 +6,7 @@ const showContainer = keyframes`
   from {
     width: 0%;
   } to {
-    width: 700px;
+    width: 100%;
   }
 `;
 
@@ -40,6 +40,7 @@ export const Container = styled.main`
   animation-duration: 1.5s;
   animation-delay: 0s;
   animation-fill-mode: backwards;
+  animation-timing-function: ease-out;
 
   height: 100%;
 
