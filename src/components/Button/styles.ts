@@ -1,6 +1,6 @@
+import { darken, transparentize } from 'polished';
 import styled, { css } from 'styled-components';
 
-import { darken, transparentize } from 'polished';
 import { IButtonProps } from '.';
 
 const ghostButtonStyle = css`
