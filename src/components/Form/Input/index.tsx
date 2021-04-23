@@ -1,10 +1,8 @@
 import React, { useEffect, useRef } from 'react';
+import { FiAlertCircle } from 'react-icons/fi';
+import { IconBaseProps } from 'react-icons/lib';
 
 import { useField } from '@unform/core';
-
-import { FiAlertCircle } from 'react-icons/fi';
-
-import { IconBaseProps } from 'react-icons/lib';
 
 import {
   Wrapper,

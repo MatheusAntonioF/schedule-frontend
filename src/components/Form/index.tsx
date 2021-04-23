@@ -1,5 +1,6 @@
-import { FormHandles, FormProps } from '@unform/core';
 import React from 'react';
+
+import { FormHandles, FormProps } from '@unform/core';
 
 import { StyledForm } from './styles';
 
