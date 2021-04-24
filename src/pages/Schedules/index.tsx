@@ -12,6 +12,7 @@ import { TodayEvents } from './TodayEvents';
 
 import { buttonsHeaderCalendar } from './calendarOptions';
 import { api } from '../../services/api';
+import { CreateEvent } from './Modals/CreateEvent';
 
 interface Tag {
   name: string;
@@ -28,6 +29,8 @@ export interface IEvent {
 
 const Schedules: React.FC = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
+
+  const [showModalCreateEvent, setShowModalCreateEvent] = useState(false);
 
   useEffect(() => {
     async function fetchTodayEvents() {
@@ -73,23 +76,32 @@ const Schedules: React.FC = () => {
   }, [events]);
 
   return (
-    <Wrapper>
-      <Container>
-        <Calendar>
-          <FullCalendar
-            weekends
-            height="100%"
-            contentHeight="100%"
-            initialView="dayGridMonth"
-            locale="pt-br"
-            plugins={[dayGridPlugin]}
-            buttonText={buttonsHeaderCalendar}
-            events={parseEvents()}
+    <>
+      <Wrapper>
+        <Container>
+          <Calendar>
+            <FullCalendar
+              weekends
+              height="100%"
+              contentHeight="100%"
+              initialView="dayGridMonth"
+              locale="pt-br"
+              plugins={[dayGridPlugin]}
+              buttonText={buttonsHeaderCalendar}
+              events={parseEvents()}
+            />
+          </Calendar>
+          <TodayEvents
+            setShowModalCreateEvent={setShowModalCreateEvent}
+            events={todayEvents()}
           />
-        </Calendar>
-        <TodayEvents events={todayEvents()} />
-      </Container>
-    </Wrapper>
+        </Container>
+      </Wrapper>
+      <CreateEvent
+        showModal={showModalCreateEvent}
+        setShowModal={setShowModalCreateEvent}
+      />
+    </>
   );
 };
 
