@@ -37,14 +37,14 @@ export const Wrapper = styled.div<IWrapperProps>`
       > label {
         transition: all 0ms;
 
-        color: ${pallete.darger.main};
+        color: ${pallete.danger.main};
       }
 
       > div {
-        border-color: ${pallete.darger.main};
+        border-color: ${pallete.danger.main};
 
         > svg.icon-input {
-          color: ${pallete.darger.main};
+          color: ${pallete.danger.main};
         }
       }
     `}
@@ -111,10 +111,10 @@ export const ContainerError = styled.div`
 
     border: none;
 
-    fill: ${({ theme: { pallete } }) => pallete.darger.main};
+    fill: ${({ theme: { pallete } }) => pallete.danger.main};
   }
 `;
 
 export const ErrorMessage = styled.span`
-  color: ${({ theme: { pallete } }) => pallete.darger.main};
+  color: ${({ theme: { pallete } }) => pallete.danger.main};
 `;

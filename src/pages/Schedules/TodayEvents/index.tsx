@@ -13,12 +13,18 @@ import { IEvent } from '..';
 
 interface ITodayEventsProps {
   events: IEvent[];
+  setShowModalCreateEvent: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const TodayEvents: React.FC<ITodayEventsProps> = ({ events }) => {
+const TodayEvents: React.FC<ITodayEventsProps> = ({
+  events,
+  setShowModalCreateEvent,
+}) => {
   return (
     <Container>
-      <NewEventButton>Criar evento</NewEventButton>
+      <NewEventButton onClick={() => setShowModalCreateEvent(true)}>
+        Criar evento
+      </NewEventButton>
 
       <ListEvents>
         {events.length > 0 &&
