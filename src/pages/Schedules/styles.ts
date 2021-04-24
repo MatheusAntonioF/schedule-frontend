@@ -51,6 +51,19 @@ export const Calendar = styled.div`
       border: none;
     }
 
+    .calendar-event {
+      margin: 0.2rem 0px;
+
+      font-weight: bold;
+
+      transition: all 200ms ease-in-out;
+      padding: 0.2rem 0.5rem;
+
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+
     .fc-today-button {
       &:disabled {
         background: ${transparentize(0.8, pallete.primary.main)};

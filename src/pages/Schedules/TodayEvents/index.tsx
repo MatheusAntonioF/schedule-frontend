@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { api } from '../../../services/api';
+import React from 'react';
 
 import {
   Container,
@@ -10,44 +9,21 @@ import {
   Tag,
 } from './styles';
 
-interface Tag {
-  name: string;
-  colorHex: string;
+import { IEvent } from '..';
+
+interface ITodayEventsProps {
+  events: IEvent[];
 }
 
-interface Event {
-  name: string;
-  description: string;
-  date: Date;
-  tags: Tag[];
-}
-
-const TodayEvents: React.FC = () => {
-  const [todayEvents, setTodayEvents] = useState<Event[]>([]);
-
-  useEffect(() => {
-    async function fetchTodayEvents() {
-      const { data } = await api.get<Event[]>('/events', {
-        params: {
-          start_date: new Date(),
-          end_date: new Date(),
-        },
-      });
-
-      setTodayEvents(data);
-    }
-
-    fetchTodayEvents();
-  }, []);
-
+const TodayEvents: React.FC<ITodayEventsProps> = ({ events }) => {
   return (
     <Container>
       <NewEventButton>Criar evento</NewEventButton>
 
       <ListEvents>
-        {todayEvents.length > 0 &&
-          todayEvents.map(({ name, description, tags }) => (
-            <Event backgroundColor={tags[0].colorHex}>
+        {events.length > 0 &&
+          events.map(({ name, description, tags }) => (
+            <Event key={name} backgroundColor={tags[0].colorHex}>
               <span className="name">{name}</span>
               <span className="description">{description}</span>
               <ListTags>
