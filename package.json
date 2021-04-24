@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fullcalendar/daygrid": "^5.6.0",
+    "@fullcalendar/react": "^5.6.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -14,6 +16,7 @@
     "@unform/web": "^2.1.6",
     "antd": "^4.15.2",
     "axios": "^0.21.1",
+    "date-fns": "^2.21.1",
     "polished": "^4.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
