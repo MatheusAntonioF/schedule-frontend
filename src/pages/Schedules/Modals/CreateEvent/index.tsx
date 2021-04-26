@@ -10,6 +10,8 @@ import { Modal } from '../../../../components/Modal';
 import { Form } from '../../../../components/Form';
 import { Input } from '../../../../components/Form/Input';
 import { Button } from '../../../../components/Button';
+import { DatePicker } from '../../../../components/Form/DatePicker';
+
 import { api } from '../../../../services/api';
 import { getValidationErrors } from '../../../../utils/getValidationErrors';
 
@@ -81,7 +83,7 @@ const CreateEvent: React.FC<ICreateEventProps> = ({
           <Form ref={formRef} onSubmit={handleSubmit}>
             <Input label="Nome" name="name" />
             <Input label="Descrição" name="description" />
-            <Input label="Data do evento" name="date" />
+            <DatePicker label="Date" name="date" />
 
             <Input label="Tags" name="tags" />
 
