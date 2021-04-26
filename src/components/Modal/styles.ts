@@ -1,22 +1,8 @@
 import { transparentize } from 'polished';
-import styled, { css, keyframes } from 'styled-components';
+import styled, { css } from 'styled-components';
 import { darkTheme } from '../../styles/themes/dark';
 
 const { pallete: palleteProps } = darkTheme;
-
-const showModalAnimation = keyframes`
-  0% {
-    opacity: 0;
-    visibility: hidden;
-  }
-  50% {
-    transform: translateY(100px);
-  }
-  100% {
-    opacity: 1;
-    visibility: visible;
-  }
-`;
 
 export const Wrapper = styled.div`
   position: absolute;
@@ -50,12 +36,6 @@ export const Modal = styled.div<{ width: string }>`
   border-radius: 5px;
 
   z-index: 3;
-
-  animation-name: ${showModalAnimation};
-  animation-duration: 200ms;
-  animation-delay: 0s;
-  animation-fill-mode: backwards;
-  animation-timing-function: ease-in;
 `;
 
 export const ModalHead = styled.div<{ color: keyof typeof palleteProps }>`
