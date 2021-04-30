@@ -14,6 +14,7 @@ import { DatePicker } from '../../../../components/Form/DatePicker';
 
 import { api } from '../../../../services/api';
 import { getValidationErrors } from '../../../../utils/getValidationErrors';
+import { Select } from '../../../../components/Form/Select';
 
 interface ICreateEventProps {
   showModal: boolean;
@@ -71,6 +72,14 @@ const CreateEvent: React.FC<ICreateEventProps> = ({
     setShowModal,
   ]);
 
+  const tagsToSelect = useCallback(() => {
+    if (tags.length === 0) return [{ value: '', label: '' }];
+
+    const parsedTags = tags.map(({ id, name }) => ({ value: id, label: name }));
+
+    return parsedTags;
+  }, [tags]);
+
   return (
     <>
       {showModal && (
@@ -85,7 +94,7 @@ const CreateEvent: React.FC<ICreateEventProps> = ({
             <Input label="Descrição" name="description" />
             <DatePicker label="Date" name="date" />
 
-            <Input label="Tags" name="tags" />
+            <Select label="Tags" name="tags" options={tagsToSelect()} />
 
             <Button>Confirmar</Button>
           </Form>
