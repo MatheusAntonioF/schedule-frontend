@@ -100,6 +100,7 @@ const Schedules: React.FC = () => {
       <CreateEvent
         showModal={showModalCreateEvent}
         setShowModal={setShowModalCreateEvent}
+        setEvents={setEvents}
       />
     </>
   );
