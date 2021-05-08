@@ -12,13 +12,17 @@ import { Input } from '../../../../components/Form/Input';
 import { Button } from '../../../../components/Button';
 import { DatePicker } from '../../../../components/Form/DatePicker';
 
-import { api } from '../../../../services/api';
+import { api } from '../../../../services/http/api';
 import { getValidationErrors } from '../../../../utils/getValidationErrors';
 import { Select } from '../../../../components/Form/Select';
+import { IEvent } from '../..';
 
 interface ICreateEventProps {
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setEvents: React.Dispatch<React.SetStateAction<IEvent[]>>;
+  selectedDate: Date;
+  setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
 }
 
 interface ITag {
@@ -30,6 +34,9 @@ interface ITag {
 const CreateEvent: React.FC<ICreateEventProps> = ({
   showModal,
   setShowModal,
+  setEvents,
+  selectedDate,
+  setSelectedDate,
 }) => {
   const [tags, setTags] = useState<ITag[]>([]);
 
@@ -45,28 +52,45 @@ const CreateEvent: React.FC<ICreateEventProps> = ({
     if (showModal) fetchTags();
   }, [showModal]);
 
-  const handleSubmit = useCallback(async data => {
-    try {
-      formRef.current?.setErrors({});
+  const handleSubmit = useCallback(
+    async (data: IEvent) => {
+      try {
+        formRef.current?.setErrors({});
 
-      const schema = Yup.object().shape({
-        name: Yup.string().required('Nome é obrigatório'),
-        description: Yup.string().required('A descrição é obrigatória'),
-        date: Yup.string().required('A data é obrigatória'),
-        tags: Yup.string().required('As tags são obrigatórias'),
-      });
+        const schema = Yup.object().shape({
+          name: Yup.string().required('Nome é obrigatório'),
+          description: Yup.string().required('A descrição é obrigatória'),
+          date: Yup.date().required('A data é obrigatória'),
+          tags: Yup.string().required('As tags são obrigatórias'),
+        });
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValidationErrors(err);
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
-        formRef.current?.setErrors(errors);
+        const { name, description, date, tags: tags_name } = data;
+
+        const { data: createdEvent } = await api.post<IEvent>('/events', {
+          name,
+          description,
+          date,
+          tags_name: [tags_name],
+        });
+
+        setEvents(oldEvents => [...oldEvents, createdEvent]);
+
+        setSelectedDate(new Date());
+        setShowModal(false);
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err);
+
+          formRef.current?.setErrors(errors);
+        }
       }
-    }
-  }, []);
+    },
+    [setEvents, setSelectedDate, setShowModal]
+  );
 
   const onCloseCallback = useCallback(() => setShowModal(false), [
     setShowModal,
@@ -75,7 +99,7 @@ const CreateEvent: React.FC<ICreateEventProps> = ({
   const tagsToSelect = useCallback(() => {
     if (tags.length === 0) return [{ value: '', label: '' }];
 
-    const parsedTags = tags.map(({ id, name }) => ({ value: id, label: name }));
+    const parsedTags = tags.map(({ name }) => ({ value: name, label: name }));
 
     return parsedTags;
   }, [tags]);
@@ -92,7 +116,7 @@ const CreateEvent: React.FC<ICreateEventProps> = ({
           <Form ref={formRef} onSubmit={handleSubmit}>
             <Input label="Nome" name="name" />
             <Input label="Descrição" name="description" />
-            <DatePicker label="Date" name="date" />
+            <DatePicker label="Date" name="date" selectedDate={selectedDate} />
 
             <Select label="Tags" name="tags" options={tagsToSelect()} />
 

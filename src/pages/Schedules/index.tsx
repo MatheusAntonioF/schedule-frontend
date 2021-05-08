@@ -4,6 +4,7 @@ import { isSameDay } from 'date-fns';
 
 import FullCalendar, { EventInput } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
 
 import { transparentize } from 'polished';
 import { Wrapper, Container, Calendar } from './styles';
@@ -11,7 +12,7 @@ import { Wrapper, Container, Calendar } from './styles';
 import { TodayEvents } from './TodayEvents';
 
 import { buttonsHeaderCalendar } from './calendarOptions';
-import { api } from '../../services/api';
+import { api } from '../../services/http/api';
 import { CreateEvent } from './Modals/CreateEvent';
 
 interface Tag {
@@ -29,8 +30,8 @@ export interface IEvent {
 
 const Schedules: React.FC = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
-
   const [showModalCreateEvent, setShowModalCreateEvent] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
     async function fetchTodayEvents() {
@@ -86,13 +87,18 @@ const Schedules: React.FC = () => {
               contentHeight="100%"
               initialView="dayGridMonth"
               locale="pt-br"
-              plugins={[dayGridPlugin]}
+              plugins={[dayGridPlugin, interactionPlugin]}
               buttonText={buttonsHeaderCalendar}
               events={parseEvents()}
+              dateClick={({ date }) => {
+                setSelectedDate(new Date(date));
+                setShowModalCreateEvent(true);
+              }}
             />
           </Calendar>
           <TodayEvents
             setShowModalCreateEvent={setShowModalCreateEvent}
+            setSelectedDate={setSelectedDate}
             events={todayEvents()}
           />
         </Container>
@@ -100,6 +106,9 @@ const Schedules: React.FC = () => {
       <CreateEvent
         showModal={showModalCreateEvent}
         setShowModal={setShowModalCreateEvent}
+        setEvents={setEvents}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
       />
     </>
   );
