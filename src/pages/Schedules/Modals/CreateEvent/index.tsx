@@ -12,7 +12,7 @@ import { Input } from '../../../../components/Form/Input';
 import { Button } from '../../../../components/Button';
 import { DatePicker } from '../../../../components/Form/DatePicker';
 
-import { api } from '../../../../services/api';
+import { api } from '../../../../services/http/api';
 import { getValidationErrors } from '../../../../utils/getValidationErrors';
 import { Select } from '../../../../components/Form/Select';
 

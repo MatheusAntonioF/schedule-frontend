@@ -17,6 +17,7 @@
     "antd": "^4.15.2",
     "axios": "^0.21.1",
     "date-fns": "^2.21.1",
+    "history": "^5.0.0",
     "polished": "^4.1.1",
     "react": "^17.0.2",
     "react-datepicker": "^3.8.0",

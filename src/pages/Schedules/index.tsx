@@ -11,7 +11,7 @@ import { Wrapper, Container, Calendar } from './styles';
 import { TodayEvents } from './TodayEvents';
 
 import { buttonsHeaderCalendar } from './calendarOptions';
-import { api } from '../../services/api';
+import { api } from '../../services/http/api';
 import { CreateEvent } from './Modals/CreateEvent';
 
 interface Tag {

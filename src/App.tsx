@@ -1,7 +1,8 @@
 import React from 'react';
-import { RootProviders } from './hooks';
 
 import Routes from './routes';
+
+import { RootProviders } from './hooks';
 import { DefaultStyles } from './styles';
 
 const App = (): JSX.Element => {
