@@ -14,15 +14,22 @@ import { IEvent } from '..';
 interface ITodayEventsProps {
   events: IEvent[];
   setShowModalCreateEvent: React.Dispatch<React.SetStateAction<boolean>>;
+  setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
 }
 
 const TodayEvents: React.FC<ITodayEventsProps> = ({
   events,
   setShowModalCreateEvent,
+  setSelectedDate,
 }) => {
   return (
     <Container>
-      <NewEventButton onClick={() => setShowModalCreateEvent(true)}>
+      <NewEventButton
+        onClick={() => {
+          setShowModalCreateEvent(true);
+          setSelectedDate(new Date());
+        }}
+      >
         Criar evento
       </NewEventButton>
 
@@ -34,7 +41,9 @@ const TodayEvents: React.FC<ITodayEventsProps> = ({
               <span className="description">{description}</span>
               <ListTags>
                 {tags.map(({ name: tagName, colorHex }) => (
-                  <Tag backgroundColor={colorHex}>{tagName}</Tag>
+                  <Tag key={tagName} backgroundColor={colorHex}>
+                    {tagName}
+                  </Tag>
                 ))}
               </ListTags>
             </Event>

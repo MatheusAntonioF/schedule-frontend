@@ -21,6 +21,8 @@ interface ICreateEventProps {
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   setEvents: React.Dispatch<React.SetStateAction<IEvent[]>>;
+  selectedDate: Date;
+  setSelectedDate: React.Dispatch<React.SetStateAction<Date>>;
 }
 
 interface ITag {
@@ -33,6 +35,8 @@ const CreateEvent: React.FC<ICreateEventProps> = ({
   showModal,
   setShowModal,
   setEvents,
+  selectedDate,
+  setSelectedDate,
 }) => {
   const [tags, setTags] = useState<ITag[]>([]);
 
@@ -74,6 +78,9 @@ const CreateEvent: React.FC<ICreateEventProps> = ({
         });
 
         setEvents(oldEvents => [...oldEvents, createdEvent]);
+
+        setSelectedDate(new Date());
+        setShowModal(false);
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -82,7 +89,7 @@ const CreateEvent: React.FC<ICreateEventProps> = ({
         }
       }
     },
-    [setEvents]
+    [setEvents, setSelectedDate, setShowModal]
   );
 
   const onCloseCallback = useCallback(() => setShowModal(false), [
@@ -109,7 +116,7 @@ const CreateEvent: React.FC<ICreateEventProps> = ({
           <Form ref={formRef} onSubmit={handleSubmit}>
             <Input label="Nome" name="name" />
             <Input label="Descrição" name="description" />
-            <DatePicker label="Date" name="date" />
+            <DatePicker label="Date" name="date" selectedDate={selectedDate} />
 
             <Select label="Tags" name="tags" options={tagsToSelect()} />
 

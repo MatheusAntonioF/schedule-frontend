@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-import { ReactDatePickerProps } from 'react-datepicker';
+import { registerLocale, ReactDatePickerProps } from 'react-datepicker';
+import ptBR from 'date-fns/locale/pt-BR';
+
 import { useField } from '@unform/core';
 
 import {
@@ -16,14 +18,20 @@ import 'react-datepicker/dist/react-datepicker.css';
 interface IDatePickerProps extends Omit<ReactDatePickerProps, 'onChange'> {
   name: string;
   label: string;
+  selectedDate?: Date;
 }
 
-const DatePicker: React.FC<IDatePickerProps> = ({ label, name, ...rest }) => {
+const DatePicker: React.FC<IDatePickerProps> = ({
+  label,
+  name,
+  selectedDate,
+  ...rest
+}) => {
   const datePickerRef = useRef(null);
 
   const { fieldName, defaultValue, error, registerField } = useField(name);
 
-  const [date, setDate] = useState(defaultValue || null);
+  const [date, setDate] = useState(selectedDate || defaultValue || null);
 
   useEffect(() => {
     registerField({
@@ -45,6 +53,7 @@ const DatePicker: React.FC<IDatePickerProps> = ({ label, name, ...rest }) => {
           selected={date}
           onChange={setDate}
           showPopperArrow={false}
+          locale={ptBR}
           {...rest}
         />
       </ContainerInput>
