@@ -39,6 +39,8 @@ const Schedules: React.FC = () => {
 
   useEffect(() => {
     async function fetchTodayEvents() {
+      api.defaults.headers.Authorization = `fuck`;
+
       const { data } = await api.get<IEvent[]>('/events');
 
       setEvents(data);
