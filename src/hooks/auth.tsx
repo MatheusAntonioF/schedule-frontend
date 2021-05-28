@@ -11,6 +11,7 @@ import { api } from '../services/http/api';
 interface IAuthState {
   user_id: string;
   token: string;
+  refresh_token: string;
 }
 
 interface ISignInCredentials {
@@ -30,11 +31,10 @@ const AuthProvider: React.FC = ({ children }) => {
   const [authData, setAuthData] = useState<IAuthState>(() => {
     const token = localStorage.getItem('@SCHEDULES:token');
     const user_id = localStorage.getItem('@SCHEDULES:user_id');
+    const refresh_token = localStorage.getItem('@SCHEDULES:refresh_token');
 
-    if (token && user_id) {
-      api.defaults.headers.authorization = `Bearer ${token}`;
-
-      return { token, user_id };
+    if (token && user_id && refresh_token) {
+      return { token, user_id, refresh_token };
     }
 
     return {} as IAuthState;
@@ -43,18 +43,19 @@ const AuthProvider: React.FC = ({ children }) => {
   const signIn = useCallback(
     async ({ email, password }: ISignInCredentials): Promise<void> => {
       const {
-        data: { token, user_id },
-      } = await api.post('/session/signin', {
+        data: { token, user_id, refresh_token },
+      } = await api.post<IAuthState>('/session/signin', {
         email,
         password,
       });
 
       localStorage.setItem('@SCHEDULES:user_id', user_id);
       localStorage.setItem('@SCHEDULES:token', token);
+      localStorage.setItem('@SCHEDULES:refresh_token', refresh_token);
 
       api.defaults.headers.Authorization = `Bearer ${token}`;
 
-      setAuthData({ token, user_id });
+      setAuthData({ token, user_id, refresh_token });
     },
     []
   );
@@ -62,6 +63,7 @@ const AuthProvider: React.FC = ({ children }) => {
   const signOut = useCallback(() => {
     localStorage.removeItem('@SCHEDULES:user_id');
     localStorage.removeItem('@SCHEDULES:token');
+    localStorage.removeItem('@SCHEDULES:refresh_token');
 
     setAuthData({} as IAuthState);
   }, []);
