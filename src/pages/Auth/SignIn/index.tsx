@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 
 import { FiMail, FiKey } from 'react-icons/fi';
-
+import { useHistory } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
 
 import * as Yup from 'yup';
@@ -24,6 +24,8 @@ const SignIn: React.FC = () => {
 
   const { signIn } = useAuth();
 
+  const history = useHistory();
+
   const handleSubmit = useCallback(
     async (data: IFormData) => {
       try {
@@ -40,7 +42,9 @@ const SignIn: React.FC = () => {
           abortEarly: false,
         });
 
-        return signIn({ ...data });
+        await signIn({ ...data });
+
+        return history.push('/schedules');
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           const errors = getValidationErrors(error);
@@ -51,7 +55,7 @@ const SignIn: React.FC = () => {
         return '';
       }
     },
-    [signIn]
+    [signIn, history]
   );
 
   return (

@@ -108,7 +108,7 @@ const CreateEvent: React.FC<ICreateEventProps> = ({
     <>
       {showModal && (
         <Modal
-          width="20rem"
+          width="22rem"
           title="Novo evento"
           headIcon={FiAward}
           onClose={onCloseCallback}

@@ -1,4 +1,10 @@
-import React, { createContext, useCallback, useContext, useState } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 
 import { api } from '../services/http/api';
 
@@ -25,7 +31,11 @@ const AuthProvider: React.FC = ({ children }) => {
     const token = localStorage.getItem('@SCHEDULES:token');
     const user_id = localStorage.getItem('@SCHEDULES:user_id');
 
-    if (token && user_id) return { token, user_id };
+    if (token && user_id) {
+      api.defaults.headers.authorization = `Bearer ${token}`;
+
+      return { token, user_id };
+    }
 
     return {} as IAuthState;
   });
@@ -39,12 +49,12 @@ const AuthProvider: React.FC = ({ children }) => {
         password,
       });
 
-      setAuthData({ token, user_id });
+      localStorage.setItem('@SCHEDULES:user_id', user_id);
+      localStorage.setItem('@SCHEDULES:token', token);
 
       api.defaults.headers.Authorization = `Bearer ${token}`;
 
-      localStorage.setItem('@SCHEDULES:user_id', user_id);
-      localStorage.setItem('@SCHEDULES:token', token);
+      setAuthData({ token, user_id });
     },
     []
   );
@@ -56,8 +66,14 @@ const AuthProvider: React.FC = ({ children }) => {
     setAuthData({} as IAuthState);
   }, []);
 
+  const providerValues = useMemo(() => ({ auth: authData, signIn, signOut }), [
+    authData,
+    signIn,
+    signOut,
+  ]);
+
   return (
-    <AuthContext.Provider value={{ auth: authData, signIn, signOut }}>
+    <AuthContext.Provider value={{ ...providerValues }}>
       {children}
     </AuthContext.Provider>
   );

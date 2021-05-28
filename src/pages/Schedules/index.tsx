@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import { isSameDay } from 'date-fns';
 
-import FullCalendar, { EventInput } from '@fullcalendar/react';
+import FullCalendar, { EventClickArg, EventInput } from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
@@ -14,8 +14,10 @@ import { TodayEvents } from './TodayEvents';
 import { buttonsHeaderCalendar } from './calendarOptions';
 import { api } from '../../services/http/api';
 import { CreateEvent } from './Modals/CreateEvent';
+import { UpdateEvent } from './Modals/UpdateEvent';
 
 interface Tag {
+  id?: string;
   name: string;
   colorHex: string;
 }
@@ -32,6 +34,8 @@ const Schedules: React.FC = () => {
   const [events, setEvents] = useState<IEvent[]>([]);
   const [showModalCreateEvent, setShowModalCreateEvent] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedEvent, setSelectedEvent] = useState<IEvent>({} as IEvent);
+  const [showModalUpdateEvent, setShowModalUpdateEvent] = useState(false);
 
   useEffect(() => {
     async function fetchTodayEvents() {
@@ -55,7 +59,7 @@ const Schedules: React.FC = () => {
 
   const parseEvents = useCallback(() => {
     const eventsToPutOnCalendar: EventInput[] = events.map(
-      ({ id, name, date, tags }) => {
+      ({ id, name, date, tags, ...rest }) => {
         const input: EventInput = {
           id,
           _id: id,
@@ -67,6 +71,8 @@ const Schedules: React.FC = () => {
           color: '#fafafa',
           date,
           display: 'block',
+          tags,
+          ...rest,
         };
 
         return input;
@@ -75,6 +81,22 @@ const Schedules: React.FC = () => {
 
     return eventsToPutOnCalendar;
   }, [events]);
+
+  const handleEventClick = useCallback((event: EventClickArg) => {
+    const { title: name } = event.event._def;
+
+    const { _id: id, description, tags } = event.event._def.extendedProps;
+
+    setSelectedEvent({
+      id,
+      name,
+      description,
+      tags,
+      date: new Date(),
+    });
+
+    setShowModalUpdateEvent(true);
+  }, []);
 
   return (
     <>
@@ -90,10 +112,11 @@ const Schedules: React.FC = () => {
               plugins={[dayGridPlugin, interactionPlugin]}
               buttonText={buttonsHeaderCalendar}
               events={parseEvents()}
-              dateClick={({ date }) => {
+              dateClick={useCallback(({ date }) => {
                 setSelectedDate(new Date(date));
                 setShowModalCreateEvent(true);
-              }}
+              }, [])}
+              eventClick={handleEventClick}
             />
           </Calendar>
           <TodayEvents
@@ -109,6 +132,13 @@ const Schedules: React.FC = () => {
         setEvents={setEvents}
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
+      />
+      <UpdateEvent
+        showModal={showModalUpdateEvent}
+        setShowModal={setShowModalUpdateEvent}
+        setEvents={setEvents}
+        selectedEvent={selectedEvent}
+        setSelectedEvent={setSelectedEvent}
       />
     </>
   );

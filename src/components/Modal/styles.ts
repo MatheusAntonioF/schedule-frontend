@@ -115,7 +115,11 @@ export const Title = styled.h2`
 export const ModalBody = styled.div`
   flex: 1;
 
-  margin: 2rem 0px 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 2rem 0 1rem;
 
   width: 100%;
 `;
