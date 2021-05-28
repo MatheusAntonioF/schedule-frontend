@@ -1,7 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 
-import { OptionTypeBase } from 'react-select';
-import ReactSelect, { Props as CreatableProps } from 'react-select/creatable';
+import ReactSelect, {
+  GroupTypeBase,
+  OptionTypeBase,
+  Props as CreatableProps,
+} from 'react-select';
 
 import { useField } from '@unform/core';
 
@@ -10,9 +13,10 @@ import { Container, ContainerError, MessageError } from './styles';
 interface ISelectProps extends CreatableProps<OptionTypeBase, false> {
   label: string;
   name: string;
+  options: readonly (OptionTypeBase | GroupTypeBase<OptionTypeBase>)[];
 }
 
-const Select: React.FC<ISelectProps> = ({ label, name, ...rest }) => {
+const Select: React.FC<ISelectProps> = ({ label, options, name, ...rest }) => {
   const selectRef = useRef(null);
 
   const { fieldName, defaultValue, error, registerField } = useField(name);
@@ -41,9 +45,12 @@ const Select: React.FC<ISelectProps> = ({ label, name, ...rest }) => {
       <label htmlFor={name}>{label}</label>
 
       <ReactSelect
-        cacheOptions
-        defaultValue={defaultValue}
+        defaultValue={
+          defaultValue && options.find(option => option.value === defaultValue)
+        }
+        value={defaultValue}
         ref={selectRef}
+        options={options}
         placeholder={label}
         classNamePrefix="react-select"
         {...rest}

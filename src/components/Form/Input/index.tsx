@@ -16,6 +16,7 @@ interface ICustomProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   name: string;
   icon?: React.ComponentType<IconBaseProps>;
+  disabled?: boolean;
 }
 
 const Input: React.FC<ICustomProps> = ({

@@ -3,8 +3,17 @@ import styled, { css } from 'styled-components';
 import ReactDakePicker from 'react-datepicker';
 import { darken } from 'polished';
 
+const disabledStyles = css`
+  ${({ theme: { pallete } }) => css`
+    > label {
+      color: ${pallete.darker.light};
+    }
+  `}
+`;
+
 interface IWrapperProps {
   inputWithError: boolean;
+  isDisabled?: boolean;
 }
 
 export const Container = styled.div<IWrapperProps>`
@@ -25,7 +34,7 @@ export const Container = styled.div<IWrapperProps>`
     transition: all 200ms ease-in-out;
   }
 
-  ${({ theme: { pallete } }) => css`
+  ${({ theme: { pallete }, isDisabled }) => css`
     &:focus-within {
       > label {
         color: ${pallete.primary.main};
@@ -64,6 +73,8 @@ export const Container = styled.div<IWrapperProps>`
     .react-datepicker__current-month {
       color: ${pallete.primary.main} !important;
     }
+
+    ${isDisabled && disabledStyles}
   `};
 `;
 
@@ -91,12 +102,14 @@ export const StyledDatePicker = styled(ReactDakePicker)`
 
   padding-left: 5px;
 
-  color: ${({ theme: { pallete } }) => pallete.text.main};
-
-  background: ${({ theme: { pallete } }) => pallete.darker.light};
-
   outline: 0;
   border: 0;
+
+  ${({ theme: { pallete } }) => css`
+    color: ${pallete.text.main};
+
+    background: ${pallete.darker.light};
+  `}
 `;
 
 export const ContainerError = styled.div`

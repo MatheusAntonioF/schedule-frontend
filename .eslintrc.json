@@ -40,7 +40,8 @@
     "react/prop-types": "off",
     "react/jsx-props-no-spreading": "off",
     "jsx-a11y/label-has-associated-control": "off",
-    "camelcase": "off"
+    "camelcase": "off",
+    "no-underscore-dangle": "off"
   },
   "settings": {
     "import/resolver": {

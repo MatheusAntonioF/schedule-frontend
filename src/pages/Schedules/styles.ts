@@ -98,6 +98,10 @@ export const Calendar = styled.div`
       background: ${transparentize(0.8, pallete.primary.main)} !important;
     }
 
+    .fc-daygrid-day:hover {
+      cursor: pointer;
+    }
+
     color: ${pallete.text.main};
 
     background: ${pallete.darker.light};

@@ -9,11 +9,16 @@ export interface IFormProps extends FormProps {
 }
 
 const FormWithRef: React.ForwardRefRenderFunction<FormHandles, IFormProps> = (
-  { width = '100%', children, onSubmit },
+  { width = '92%', children, onSubmit, initialData },
   ref
 ) => {
   return (
-    <StyledForm width={width} ref={ref} onSubmit={onSubmit}>
+    <StyledForm
+      width={width}
+      ref={ref}
+      onSubmit={onSubmit}
+      initialData={initialData}
+    >
       {children}
     </StyledForm>
   );
